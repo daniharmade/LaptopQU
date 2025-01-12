@@ -1,8 +1,8 @@
 package com.example.laptopqu.ui.screen.home
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavHostController
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.example.laptopqu.LaptopQUViewModel
 import com.example.laptopqu.ViewModelFactory
 import com.example.laptopqu.data.LaptopRepository

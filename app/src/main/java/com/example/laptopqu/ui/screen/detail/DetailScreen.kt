@@ -4,9 +4,24 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
+import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SmallTopAppBar
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,10 +30,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.example.laptopqu.R
 import com.example.laptopqu.data.LaptopRepository
 import com.example.laptopqu.ui.viewmodel.LaptopDetailViewModel
@@ -32,16 +46,12 @@ fun DetailScreen(
         factory = LaptopDetailViewModel.Factory(
             LaptopRepository()
         )
-    ) // Pass the repository to viewModel
+    )
 ) {
-    // Get the context from LocalContext
     val context = LocalContext.current
-
-    // Fetch the laptop details using laptopId from the ViewModel
     val laptop = viewModel.getLaptopById(laptopId)
 
     if (laptop != null) {
-        // Show the laptop details if available
         Scaffold(
             topBar = {
                 SmallTopAppBar(
@@ -64,19 +74,17 @@ fun DetailScreen(
                         .padding(16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    // Display laptop photo with rounded corners
                     Image(
-                        painter = painterResource(id = laptop.photoUrl), // Use the correct resource ID for the image
+                        painter = painterResource(id = laptop.photoUrl),
                         contentDescription = null,
                         modifier = Modifier
                             .size(220.dp)
                             .padding(8.dp)
-                            .clip(RoundedCornerShape(16.dp)) // Rounded corners for the image
+                            .clip(RoundedCornerShape(16.dp))
                     )
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    // Card to display laptop details in a structured way
                     Card(
                         shape = RoundedCornerShape(16.dp),
                         modifier = Modifier.fillMaxWidth()
@@ -86,27 +94,22 @@ fun DetailScreen(
                                 .padding(16.dp)
                                 .fillMaxWidth()
                         ) {
-                            // Display laptop name with a large, bold font
                             Text(
                                 text = laptop.name,
                                 style = MaterialTheme.typography.headlineLarge.copy(fontWeight = FontWeight.Bold),
                                 modifier = Modifier.padding(bottom = 8.dp)
                             )
-                            // Display laptop price with a prominent font style
                             Text(
                                 text = laptop.price,
                                 style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
                                 color = Color.DarkGray,
                                 modifier = Modifier.padding(bottom = 16.dp)
                             )
-
-                            // Section title for Specifications
                             Text(
                                 text = "Specifications:",
                                 style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
                                 modifier = Modifier.padding(bottom = 8.dp)
                             )
-                            // Display laptop specifications
                             Text(
                                 text = laptop.specification,
                                 style = MaterialTheme.typography.bodyMedium,
@@ -115,7 +118,6 @@ fun DetailScreen(
 
                             Spacer(modifier = Modifier.height(16.dp))
 
-                            // Add message text for contact
                             Text(
                                 text = "Berminat? Hubungi sekarang",
                                 style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
@@ -123,12 +125,10 @@ fun DetailScreen(
                                 modifier = Modifier.padding(top = 8.dp)
                             )
 
-                            // Add buttons to contact via email or WhatsApp
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.Center
                             ) {
-                                // Email Button
                                 IconButton(
                                     onClick = { sendEmail(context) },
                                     modifier = Modifier.padding(8.dp)
@@ -140,7 +140,6 @@ fun DetailScreen(
                                     )
                                 }
 
-                                // WhatsApp Button
                                 IconButton(
                                     onClick = { sendWhatsApp(context) },
                                     modifier = Modifier.padding(8.dp)
@@ -158,15 +157,13 @@ fun DetailScreen(
             }
         )
     } else {
-        // Display a placeholder or error message if laptop is not found
         Text("Laptop not found.", style = MaterialTheme.typography.bodyLarge, color = Color.Red)
     }
 }
 
-// Inside your composable
 private fun sendEmail(context: Context) {
     val intent = Intent(Intent.ACTION_SENDTO).apply {
-        data = Uri.parse("mailto:harmadedani@gmail.com") // Email address
+        data = Uri.parse("mailto:harmadedani@gmail.com")
         putExtra(Intent.EXTRA_SUBJECT, "Inquiry about Laptop")
     }
     context.startActivity(intent)

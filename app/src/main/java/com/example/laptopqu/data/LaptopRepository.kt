@@ -18,4 +18,17 @@ class LaptopRepository {
     fun getLaptopById(id: Int): Laptop? {
         return LaptopData.laptop.find { it.id == id }
     }
+
+    // Method to toggle favorite status
+    fun toggleFavorite(id: Int) {
+        val laptop = LaptopData.laptop.find { it.id == id }
+        laptop?.let {
+            it.isFavorite = !it.isFavorite
+        }
+    }
+
+    // Method to get only favorite laptops
+    fun getFavoriteLaptops(): List<Laptop> {
+        return LaptopData.laptop.filter { it.isFavorite }
+    }
 }

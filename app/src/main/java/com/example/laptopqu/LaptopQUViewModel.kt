@@ -16,6 +16,9 @@ class LaptopQUViewModel(private val repository: LaptopRepository) : ViewModel() 
     )
     val groupedLaptops: StateFlow<Map<Char, List<Laptop>>> get() = _groupedLaptops
 
+    private val _favoriteLaptops = MutableStateFlow<List<Laptop>>(repository.getFavoriteLaptops())
+    val favoriteLaptops: StateFlow<List<Laptop>> get() = _favoriteLaptops
+
     private val _query = mutableStateOf("")
     val query: State<String> get() = _query
 
@@ -24,6 +27,14 @@ class LaptopQUViewModel(private val repository: LaptopRepository) : ViewModel() 
         _groupedLaptops.value = repository.searchLaptops(_query.value)
             .sortedBy { it.name }
             .groupBy { it.name[0] }
+    }
+
+    fun toggleFavorite(laptopId: Int) {
+        repository.toggleFavorite(laptopId)
+        _groupedLaptops.value = _groupedLaptops.value.mapValues { entry ->
+            entry.value.sortedBy { it.name }
+        }
+        _favoriteLaptops.value = repository.getFavoriteLaptops()
     }
 }
 

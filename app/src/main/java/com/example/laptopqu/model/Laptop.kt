@@ -1,6 +1,6 @@
 package com.example.laptopqu.model
 
-data class Laptop (
+data class Laptop(
     val id: Int,
     val name: String,
     val photoUrl: Int,
