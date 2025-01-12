@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">LaptopQU</string>
     <string name="scroll_to_top">Scroll to Top</string>
-    <string name="search_laptop">Search Laptop</string>
+    <string name="search_laptop">Cari Laptop Kesukaan Anda...!</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_favorite">Favorite</string>
+    <string name="menu_profile">Profile</string>
 </resources>
