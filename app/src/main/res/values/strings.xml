@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">LaptopQU</string>
+    <string name="scroll_to_top">Scroll to Top</string>
+    <string name="search_laptop">Search Laptop</string>
+</resources>
