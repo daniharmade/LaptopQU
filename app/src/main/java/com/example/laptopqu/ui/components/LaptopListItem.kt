@@ -34,9 +34,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.laptopqu.LaptopQUViewModel
 import com.example.laptopqu.R
+import com.example.laptopqu.ui.navigation.Screen
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -89,34 +91,35 @@ fun LaptopList(
             }
         }
 
-        // Menampilkan laptop jika ada hasil pencarian
         filteredLaptops.forEach { (_, laptops) ->
             items(laptops, key = { it.id }) { laptop ->
                 LaptopListItem(
+                    laptopId = laptop.id,
                     name = laptop.name,
-                    photoUrl = laptop.photoUrl,
+                    photoUrl = laptop.photoUrl,  // Replace with the correct drawable resource
                     price = laptop.price,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .animateItemPlacement(tween(durationMillis = 100))
+                    navController = navController
                 )
             }
         }
+
     }
 }
 
-
-
 @Composable
 fun LaptopListItem(
+    laptopId: Int,
     name: String,
     photoUrl: Int,
     price: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navController: NavHostController
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier.clickable { }
+        modifier = modifier.clickable {
+            navController.navigate(Screen.DetailLaptop.createRoute(laptopId))
+        }
     ) {
         Image(
             painter = painterResource(id = photoUrl),
@@ -144,6 +147,7 @@ fun LaptopListItem(
         }
     }
 }
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -175,12 +179,14 @@ fun SearchBar(
 }
 
 
-@Preview(showBackground = true)
-@Composable
-fun LaptopListItemPreview() {
-    LaptopListItem(
-        name = "Laptop XYZ",
-        photoUrl = R.drawable.acernitro5,
-        price = "Rp 12.000.000"
-    )
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun LaptopListItemPreview() {
+//    LaptopListItem(
+//        name = "Laptop XYZ",
+//        photoUrl = R.drawable.acernitro5,
+//        price = "Rp 12.000.000",
+//        navController = NavController(),
+//        laptopId = 0
+//    )
+//}

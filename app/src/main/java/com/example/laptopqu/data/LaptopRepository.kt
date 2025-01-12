@@ -8,9 +8,14 @@ class LaptopRepository {
         return LaptopData.laptop
     }
 
-    fun searchLaptops(query: String): List<Laptop>{
+    fun searchLaptops(query: String): List<Laptop> {
         return LaptopData.laptop.filter {
             it.name.contains(query, ignoreCase = true)
         }
+    }
+
+    // Add a method to get a laptop by ID
+    fun getLaptopById(id: Int): Laptop? {
+        return LaptopData.laptop.find { it.id == id }
     }
 }

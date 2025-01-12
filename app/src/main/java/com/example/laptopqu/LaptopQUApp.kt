@@ -29,6 +29,7 @@ import com.example.laptopqu.data.LaptopRepository
 import com.example.laptopqu.ui.navigation.NavigationItem
 import com.example.laptopqu.ui.screen.home.HomeScreen
 import com.example.laptopqu.ui.navigation.Screen
+import com.example.laptopqu.ui.screen.detail.DetailScreen
 import com.example.laptopqu.ui.screen.favorite.FavoriteScreen
 import com.example.laptopqu.ui.screen.profile.ProfileScreen
 
@@ -53,9 +54,14 @@ fun LaptopQUApp(
             }
             composable(Screen.Favorite.route) { FavoriteScreen() }
             composable(Screen.Profile.route) { ProfileScreen() }
+            composable(Screen.DetailLaptop.route) { backStackEntry ->
+                val laptopId = backStackEntry.arguments?.getString("laptopId")?.toInt() ?: 0
+                DetailScreen(laptopId = laptopId, navController = navController)
+            }
         }
-    }
-}
+    } // Close the Scaffold
+} // Add the closing bracket for LaptopQUApp
+
 
 @Composable
 private fun BottomBar(
